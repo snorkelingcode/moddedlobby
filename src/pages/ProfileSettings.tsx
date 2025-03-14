@@ -1,14 +1,45 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Header from '../components/Header';
 import Navigation from '../components/Navigation';
-import Button from '../components/Button';
+import Menu from '../components/Menu';
 import { ProfileSettingsProps, UserProfile } from '../types';
 
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+`;
+
+const HeaderBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-height);
+  width: 100%;
+  background-color: #333;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+`;
+
+const Logo = styled.div`
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+`;
+
+const MenuButton = styled.button`
+  color: white;
+  font-size: 16px;
+  padding: 5px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    color: #aaa;
+  }
 `;
 
 const ContentContainer = styled.div`
@@ -49,11 +80,12 @@ const ProfilePicture = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  border: 2px solid var(--accent-color);
+  border: 2px solid #444;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  background-color: #555;
 `;
 
 const FormGroup = styled.div`
@@ -97,8 +129,31 @@ const ActionButtons = styled.div`
   gap: 10px;
 `;
 
+interface StyledButtonProps {
+  danger?: boolean;
+  fullWidth?: boolean;
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
+  display: block;
+  background-color: ${props => props.danger ? '#d32f2f' : '#444'};
+  color: white;
+  padding: 8px 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: ${props => props.fullWidth ? '100%' : 'auto'};
+  transition: background-color 0.2s;
+  text-align: center;
+  border: none;
+  
+  &:hover {
+    background-color: ${props => props.danger ? '#b71c1c' : '#555'};
+  }
+`;
+
 const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userType = 'client' }) => {
-  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   
   // Sample profile data
   const profile: UserProfile = {
@@ -112,7 +167,13 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userType = 'client' }
   
   return (
     <PageContainer>
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
+      <HeaderBar>
+        <Logo>Developer Platform</Logo>
+        <MenuButton onClick={() => setMenuOpen(true)}>Menu</MenuButton>
+      </HeaderBar>
+      
+      <Menu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
       <ContentContainer>
         <Navigation activeTab="Profile Settings" />
         
@@ -127,12 +188,12 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userType = 'client' }
               <FormGroup>
                 <Label>Email:</Label>
                 <Input type="email" value={profile.email} readOnly />
-                <Button style={{ marginTop: '10px' }}>Change</Button>
+                <StyledButton style={{ marginTop: '10px' }}>Change</StyledButton>
               </FormGroup>
               
               <FormGroup>
                 <Label>Password:</Label>
-                <Button>Sign-In</Button>
+                <StyledButton>Change Password</StyledButton>
               </FormGroup>
             </LeftColumn>
             
@@ -159,8 +220,8 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userType = 'client' }
               </FormGroup>
               
               <ActionButtons>
-                <Button fullWidth>Manage Subscription</Button>
-                <Button fullWidth danger>Delete Account</Button>
+                <StyledButton fullWidth>Manage Subscription</StyledButton>
+                <StyledButton fullWidth danger>Delete Account</StyledButton>
               </ActionButtons>
             </RightColumn>
           </ProfileSection>

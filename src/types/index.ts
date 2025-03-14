@@ -44,8 +44,12 @@ export interface ButtonProps {
 }
 
 export interface HeaderProps {
-  showMenu: boolean;
-  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  onMenuClick: () => void;
+}
+
+export interface MenuProps {
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export interface NavigationProps {

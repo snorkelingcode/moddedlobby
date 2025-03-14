@@ -1,18 +1,27 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import Menu from '../components/Menu';
 
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 `;
 
 const MenuBar = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   background-color: #333;
   padding: 8px 20px;
+  height: var(--header-height);
+`;
+
+const Logo = styled.div`
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
 `;
 
 const MenuButton = styled.button`
@@ -21,16 +30,22 @@ const MenuButton = styled.button`
   color: white;
   font-size: 16px;
   cursor: pointer;
+  
+  &:hover {
+    color: var(--accent-color);
+  }
 `;
 
 const EditorContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   flex: 1;
+  overflow: hidden;
   
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
+    overflow-y: auto;
   }
 `;
 
@@ -39,6 +54,7 @@ const FormatPanel = styled.div`
   flex-direction: column;
   background-color: white;
   border-right: 1px solid #ccc;
+  overflow: hidden;
   
   @media (max-width: 768px) {
     border-right: none;
@@ -50,6 +66,7 @@ const EditPanel = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
+  overflow: hidden;
 `;
 
 const PanelHeader = styled.div`
@@ -66,8 +83,8 @@ const PanelTitle = styled.h3`
 `;
 
 const EditButton = styled.button`
-  background-color: #FF7700;
-  border: none;
+  background-color: #444;
+  border: 1px solid #555;
   width: 24px;
   height: 24px;
   border-radius: 4px;
@@ -75,6 +92,7 @@ const EditButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  color: white;
 `;
 
 const PanelContent = styled.div`
@@ -190,12 +208,21 @@ const EditTrigger = styled.span`
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-top: 6px solid transparent;
-  border-left: 10px solid #FF7700;
-  border-bottom: 6px solid transparent;
+  width: 16px;
+  height: 16px;
+  background-color: #444;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  color: white;
+  font-size: 10px;
+  
+  &::after {
+    content: "✏️";
+    font-size: 10px;
+  }
 `;
 
 const PreviewContainer = styled.div`
@@ -246,7 +273,7 @@ const PopupTitle = styled.div`
     background: none;
     border: none;
     cursor: pointer;
-    color: #FF7700;
+    color: #333;
     font-weight: bold;
   }
 `;
@@ -267,7 +294,7 @@ const ColorPickerRow = styled.div`
   }
 `;
 
-const ColorPreview = styled.div`
+const ColorPreview = styled.div<{ color: string }>`
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -303,8 +330,8 @@ const JustificationOptions = styled.div`
   }
 `;
 
-const JustifyOption = styled.button`
-  background-color: ${props => props ? '#ccc' : '#eee'};
+const JustifyOption = styled.button<{ isActive?: boolean }>`
+  background-color: ${props => props.isActive ? '#aaa' : '#eee'};
   border: 1px solid #999;
   padding: 5px 10px;
   cursor: pointer;
@@ -325,8 +352,9 @@ const FontSizeOption = styled.div`
   text-align: center;
 `;
 
-const EditorPage = () => {
+const EditorPage: React.FC = () => {
   const [activePopup, setActivePopup] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   
   const handleEditClick = (elementId: string) => {
     if (activePopup === elementId) {
@@ -336,18 +364,25 @@ const EditorPage = () => {
     }
   };
   
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+  
   return (
     <PageContainer>
       <MenuBar>
-        <MenuButton>Menu</MenuButton>
+        <Logo>Developer Platform</Logo>
+        <MenuButton onClick={toggleMenu}>Menu</MenuButton>
       </MenuBar>
+      
+      <Menu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
       <EditorContainer>
         {/* Left side - Format Panel (static) */}
         <FormatPanel>
           <PanelHeader>
             <PanelTitle>Header 1</PanelTitle>
-            <EditButton />
+            <EditButton>+</EditButton>
           </PanelHeader>
           
           <PanelContent>
@@ -374,7 +409,7 @@ const EditorPage = () => {
         <EditPanel>
           <PanelHeader>
             <PanelTitle>Welcome!</PanelTitle>
-            <EditButton />
+            <EditButton>+</EditButton>
           </PanelHeader>
           
           <PanelContent>
@@ -401,7 +436,7 @@ const EditorPage = () => {
                   <FontOptionRow>
                     <span>Justification:</span>
                     <JustificationOptions>
-                      <JustifyOption>Left</JustifyOption>
+                      <JustifyOption isActive={true}>Left</JustifyOption>
                       <JustifyOption>Center</JustifyOption>
                       <JustifyOption>Right</JustifyOption>
                     </JustificationOptions>
@@ -435,7 +470,7 @@ const EditorPage = () => {
                   <FontOptionRow>
                     <span>Justification:</span>
                     <JustificationOptions>
-                      <JustifyOption>Left</JustifyOption>
+                      <JustifyOption isActive={true}>Left</JustifyOption>
                       <JustifyOption>Center</JustifyOption>
                       <JustifyOption>Right</JustifyOption>
                     </JustificationOptions>
@@ -467,7 +502,7 @@ const EditorPage = () => {
                   <FontOptionRow>
                     <span>Justification:</span>
                     <JustificationOptions>
-                      <JustifyOption>Left</JustifyOption>
+                      <JustifyOption isActive={true}>Left</JustifyOption>
                       <JustifyOption>Center</JustifyOption>
                       <JustifyOption>Right</JustifyOption>
                     </JustificationOptions>

@@ -7,20 +7,20 @@ import { UserType } from './types';
 import Introduction from './pages/Introduction';
 import Dashboard from './pages/Dashboard';
 import ProjectSettings from './pages/ProjectSettings';
-import ProfileSettings from './pages/ProfileSettings'; 
+import ProfileSettings from './pages/ProfileSettings';
 import AIReformat from './pages/AIReformat';
 import ClientPage from './pages/ClientPage';
 import DeveloperPage from './pages/DeveloperPage';
 import EditorPage from './pages/EditorPage';
 import ContactPage from './pages/ContactPage';
-import MenuPage from './pages/MenuPage';
 
 // Root Container
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f0f0f0;
+  overflow-x: hidden;
 `;
 
 function App() {
@@ -43,7 +43,6 @@ function App() {
           <Route path="/developer" element={<DeveloperPage />} />
           <Route path="/editor" element={<EditorPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/menu" element={<MenuPage />} />
         </Routes>
       </AppContainer>
     </BrowserRouter>

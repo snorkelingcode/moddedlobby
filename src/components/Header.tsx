@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HeaderProps } from '../types';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -15,6 +14,12 @@ const HeaderContainer = styled.header`
   z-index: 100;
 `;
 
+const Logo = styled.div`
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+`;
+
 const MenuButton = styled.button`
   color: white;
   font-size: 16px;
@@ -22,27 +27,22 @@ const MenuButton = styled.button`
   border-radius: 4px;
   background: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: none;
+  
+  &:hover {
+    color: var(--accent-color);
+  }
 `;
 
-const CloseButton = styled.button`
-  color: var(--accent-color);
-  font-size: 24px;
-  font-weight: bold;
-  background: none;
-  cursor: pointer;
-`;
+interface HeaderProps {
+  onMenuClick: () => void;
+}
 
-const Header: React.FC<HeaderProps> = ({ showMenu, setShowMenu }) => {
+const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   return (
     <HeaderContainer>
-      {showMenu ? (
-        <CloseButton onClick={() => setShowMenu(false)}>X</CloseButton>
-      ) : (
-        <MenuButton onClick={() => setShowMenu(true)}>Menu</MenuButton>
-      )}
+      <Logo>Developer Platform</Logo>
+      <MenuButton onClick={onMenuClick}>Menu</MenuButton>
     </HeaderContainer>
   );
 };

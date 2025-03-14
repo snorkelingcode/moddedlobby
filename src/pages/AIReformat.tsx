@@ -1,13 +1,44 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import Header from '../components/Header';
 import Navigation from '../components/Navigation';
-import Button from '../components/Button';
+import Menu from '../components/Menu';
 
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+`;
+
+const HeaderBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-height);
+  width: 100%;
+  background-color: #333;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+`;
+
+const Logo = styled.div`
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+`;
+
+const MenuButton = styled.button`
+  color: white;
+  font-size: 16px;
+  padding: 5px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    color: #aaa;
+  }
 `;
 
 const ContentContainer = styled.div`
@@ -58,7 +89,7 @@ const PromptInput = styled.textarea`
   width: 100%;
   height: 100px;
   padding: 10px;
-  border: 1px solid var(--accent-color);
+  border: 1px solid #555;
   border-radius: 5px;
   background-color: var(--gray-light);
   resize: none;
@@ -66,6 +97,26 @@ const PromptInput = styled.textarea`
   
   &::placeholder {
     color: #999;
+  }
+`;
+
+const AddButton = styled.button`
+  position: relative;
+  float: right;
+  margin-top: -40px;
+  margin-right: 10px;
+  background-color: #444;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: #555;
   }
 `;
 
@@ -79,13 +130,33 @@ const ActionButtons = styled.div`
   }
 `;
 
-const AIReformat = () => {
-  const [showMenu, setShowMenu] = useState<boolean>(false);
+const Button = styled.button<{ primary?: boolean }>`
+  background-color: ${props => props.primary ? '#444' : '#333'};
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  
+  &:hover {
+    background-color: ${props => props.primary ? '#555' : '#444'};
+  }
+`;
+
+const AIReformat: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [prompt, setPrompt] = useState<string>('');
   
   return (
     <PageContainer>
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
+      <HeaderBar>
+        <Logo>Developer Platform</Logo>
+        <MenuButton onClick={() => setMenuOpen(true)}>Menu</MenuButton>
+      </HeaderBar>
+      
+      <Menu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
       <ContentContainer>
         <Navigation activeTab="AI Reformat" />
         
@@ -112,10 +183,7 @@ const AIReformat = () => {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
             />
-            <Button 
-              icon="➕" 
-              style={{ position: 'relative', float: 'right', marginTop: '-40px', marginRight: '10px' }}
-            />
+            <AddButton>+</AddButton>
           </PromptSection>
           
           <ActionButtons>
