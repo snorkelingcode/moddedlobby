@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
@@ -80,8 +80,8 @@ const ActionButtons = styled.div`
 `;
 
 const AIReformat = () => {
-  const [showMenu, setShowMenu] = useState(false);
-  const [prompt, setPrompt] = useState('');
+  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [prompt, setPrompt] = useState<string>('');
   
   return (
     <PageContainer>

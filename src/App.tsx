@@ -1,14 +1,12 @@
-import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyle from './styles/GlobalStyle';
 import { UserType } from './types';
 
-
 // Pages
 import Introduction from './pages/Introduction';
 import Dashboard from './pages/Dashboard';
-import ProjectSettings from './pages/ProjectSettings.tsx';
+import ProjectSettings from './pages/ProjectSettings';
 import ProfileSettings from './pages/ProfileSettings'; 
 import AIReformat from './pages/AIReformat';
 import ClientPage from './pages/ClientPage';
@@ -26,7 +24,8 @@ const AppContainer = styled.div`
 `;
 
 function App() {
-  const [userType, setUserType] = useState<UserType>('developer'); // or 'client'
+  // Define userType directly without useState
+  const userType: UserType = 'developer';
 
   return (
     <BrowserRouter>

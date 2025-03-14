@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../components/Button';
 import { MenuPageProps } from '../types';
@@ -62,7 +61,7 @@ interface MenuItemType {
   path: string;
 }
 
-const MenuPage: React.FC<MenuPageProps> = ({ onClose }) => {
+const MenuPage = ({ onClose }: MenuPageProps) => {
   const navigate = useNavigate();
 
   const handleNavigation = (path: string) => {

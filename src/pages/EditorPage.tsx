@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Button from '../components/Button';
@@ -137,9 +137,8 @@ const PreviewGrid = styled.div`
   gap: 10px;
 `;
 
-const EditorPage: React.FC = () => {
+const EditorPage = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<string>('modules');
   
   // Sample module categories
   const moduleCategories: ModuleCategory[] = [
