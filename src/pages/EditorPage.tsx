@@ -6,7 +6,7 @@ const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #f8f8f8;
 `;
 
 const MenuBar = styled.div`
@@ -37,112 +37,113 @@ const MenuButton = styled.button`
 `;
 
 const ContentContainer = styled.div`
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 800px;
   width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1;
 `;
 
-const CardsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const Card = styled.div`
+const EditorPanel = styled.div`
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  margin-bottom: 20px;
 `;
 
-const CardHeader = styled.div`
-  background-color: #333;
+const HeaderSection = styled.div`
+  background-color: #555;
+  padding: 25px;
   color: white;
-  padding: 1rem;
-  font-weight: bold;
-  font-size: 1.2rem;
-`;
-
-const CardContent = styled.div`
-  padding: 1rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-`;
-
-const PreviewCard = styled(Card)`
   position: relative;
-  border: 1px solid #e0e0e0;
 `;
 
-const PreviewCardHeader = styled(CardHeader)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+const ContentSection = styled.div`
+  padding: 25px;
+  background-color: #f0f0f0;
+  position: relative;
 `;
 
-const PreviewBadge = styled.span`
-  background-color: var(--accent-color);
-  color: white;
-  padding: 0.25rem 0.5rem;
+// Editable components with dotted borders
+const EditableContainer = styled.div`
+  border: 2px dotted rgba(255, 255, 255, 0.4);
   border-radius: 4px;
-  font-size: 0.8rem;
-  font-weight: normal;
-`;
-
-const HowToCard = styled(Card)`
-  margin-top: 2rem;
-`;
-
-const HowToList = styled.ol`
-  padding-left: 1.5rem;
-  margin: 1rem 0;
+  padding: 8px;
+  margin-bottom: 10px;
+  transition: border-color 0.2s ease;
   
-  li {
-    margin-bottom: 1rem;
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.8);
+  }
+  
+  &:focus-within {
+    border-color: rgba(255, 255, 255, 0.8);
   }
 `;
 
-// Original content from the code
-// Format panel content
-const FormatHeader = styled.div`
-  padding: 20px;
-  background-color: #555;
+const ContentEditableContainer = styled(EditableContainer)`
+  border-color: rgba(0, 0, 0, 0.2);
+  
+  &:hover {
+    border-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  &:focus-within {
+    border-color: rgba(0, 0, 0, 0.4);
+  }
 `;
 
-const FormatHeaderText = styled.h1`
-  color: white;
+const EditableHeading = styled.h1`
   margin: 0;
+  position: relative;
+  padding-right: 30px;
+  outline: none;
 `;
 
-const FormatHeaderSubtext = styled.div`
+const EditableSubheading = styled.p`
+  margin: 0;
+  position: relative;
+  padding-right: 30px;
+  font-size: 1.1rem;
+  outline: none;
+`;
+
+const EditableFeatureHeading = styled.h2`
+  margin: 0;
+  position: relative;
+  padding-right: 30px;
+  outline: none;
+`;
+
+const EditableFeatureText = styled.p`
+  margin: 0;
+  position: relative;
+  padding-right: 30px;
+  line-height: 1.6;
+  outline: none;
+`;
+
+const EditTrigger = styled.span`
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-color: #444;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   color: white;
   font-size: 12px;
-  margin-top: 5px;
-`;
-
-const FormatContent = styled.div`
-  padding: 20px;
-  background-color: #f0f0f0;
-`;
-
-const FormatHeading = styled.h3`
-  margin-bottom: 10px;
-`;
-
-const FormatParagraph = styled.div`
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 20px;
+  
+  &::after {
+    content: "✏️";
+    font-size: 12px;
+  }
 `;
 
 const UploadImageSection = styled.div`
@@ -152,132 +153,171 @@ const UploadImageSection = styled.div`
   justify-content: center;
   background-color: #ddd;
   min-height: 200px;
-  border-radius: 5px;
-  margin-top: 20px;
+  border-radius: 8px;
+  margin-top: 25px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border: 2px dotted rgba(0, 0, 0, 0.2);
+  
+  &:hover {
+    background-color: #d0d0d0;
+    border-color: rgba(0, 0, 0, 0.4);
+  }
 `;
 
 const UploadIcon = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border: 2px solid #777;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 24px;
 `;
 
-const FooterButton = styled.button`
-  width: 100%;
-  background-color: #555;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-  margin-top: auto;
+const UploadText = styled.div`
+  font-size: 16px;
+  color: #555;
+  font-weight: 500;
 `;
 
-// Edit panel content components
-const HeaderSection = styled.div`
-  background-color: #555;
-  padding: 20px;
-  color: white;
-  position: relative;
-`;
-
-const ContentSection = styled.div`
-  padding: 20px;
-  background-color: #f0f0f0;
-  position: relative;
-`;
-
-const EditableHeading = styled.h1`
-  margin: 0;
-  position: relative;
-  padding-right: 20px;
-`;
-
-const EditableSubheading = styled.p`
-  margin: 5px 0 0 0;
-  position: relative;
-  padding-right: 20px;
-`;
-
-const EditableFeatureHeading = styled.h3`
-  margin: 0;
-  position: relative;
-  padding-right: 20px;
-`;
-
-const EditableFeatureText = styled.p`
-  margin: 5px 0 0 0;
-  position: relative;
-  padding-right: 20px;
-`;
-
-const EditTrigger = styled.span`
+// Editor popup for styling
+const EditorPopup = styled.div`
   position: absolute;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  background-color: #444;
-  border-radius: 50%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 10;
+  min-width: 250px;
+`;
+
+const PopupTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  
+  span {
+    font-weight: bold;
+  }
+  
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+  }
+`;
+
+const ColorPickerRow = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: white;
-  font-size: 10px;
+  margin-bottom: 15px;
   
-  &::after {
-    content: "✏️";
-    font-size: 10px;
+  span {
+    width: 80px;
+    font-weight: 500;
+  }
+  
+  input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
 `;
 
-const PreviewContainer = styled.div`
+const ColorPreview = styled.div<{ color: string }>`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: ${props => props.color || '#000000'};
+  margin-left: 10px;
   border: 1px solid #ccc;
-  margin-top: 20px;
-  padding: 10px;
 `;
 
-const PreviewGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-`;
-
-const PreviewItem = styled.div`
-  background-color: #555;
-  padding: 10px;
-  color: white;
-  font-size: 12px;
+const FontOptionRow = styled.div`
+  margin-bottom: 15px;
   
-  p {
-    font-size: 10px;
+  span {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
   }
 `;
 
-const ActionButton = styled.button`
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 5px;
-  font-weight: bold;
+const FontSelect = styled.div`
+  background-color: #eee;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
   cursor: pointer;
-  margin-top: 1.5rem;
-  align-self: center;
   
   &:hover {
-    background-color: #e66c00;
+    background-color: #e0e0e0;
+  }
+`;
+
+const JustificationOptions = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  
+  span {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+`;
+
+const JustifyOption = styled.button<{ isActive?: boolean }>`
+  background-color: ${props => props.isActive ? '#aaa' : '#eee'};
+  border: 1px solid #999;
+  padding: 8px 12px;
+  cursor: pointer;
+  
+  &:first-child {
+    border-radius: 4px 0 0 4px;
+  }
+  
+  &:last-child {
+    border-radius: 0 4px 4px 0;
+  }
+  
+  &:hover {
+    background-color: ${props => props.isActive ? '#999' : '#e0e0e0'};
+  }
+`;
+
+const FontSizeOption = styled.div`
+  background-color: #eee;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: #e0e0e0;
   }
 `;
 
 const EditorPage: React.FC = () => {
+  const [activePopup, setActivePopup] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  
+  const handleEditClick = (elementId: string) => {
+    if (activePopup === elementId) {
+      setActivePopup(null);
+    } else {
+      setActivePopup(elementId);
+    }
+  };
   
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -293,112 +333,152 @@ const EditorPage: React.FC = () => {
       <Menu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
       <ContentContainer>
-        <h1>Website Customization Templates</h1>
-        <p>Choose from one of our professionally designed templates to get started</p>
-        
-        <CardsGrid>
-          {/* Content Editor Preview Card */}
-          <PreviewCard>
-            <PreviewCardHeader>
-              Content Editor
-              <PreviewBadge>Modern</PreviewBadge>
-            </PreviewCardHeader>
-            <CardContent>
-              {/* Using the original content as a preview */}
-              <div className="sc-gfoqjT XjPGo">
-                <HeaderSection className="sc-kbousE Kbduv">
-                  <EditableHeading contentEditable="true" className="sc-hHOBiw hgbTIH">
-                    Welcome!
-                    <EditTrigger className="sc-kzqdkY VOXSS"></EditTrigger>
-                  </EditableHeading>
-                  <EditableSubheading contentEditable="true" className="sc-kWtpeL gJOyRk">
-                    Our goal is to be your favorite brand for building websites!
-                    <EditTrigger className="sc-kzqdkY VOXSS"></EditTrigger>
-                  </EditableSubheading>
-                </HeaderSection>
-                
-                <ContentSection className="sc-sLsrZ kzrLFk">
-                  <EditableFeatureHeading contentEditable="true" className="sc-ecPEgm logKGZ">
-                    Features
-                    <EditTrigger className="sc-kzqdkY VOXSS"></EditTrigger>
-                  </EditableFeatureHeading>
-                  <EditableFeatureText contentEditable="true" className="sc-gdyeKB itVvnn">
-                    Our drag and drop modules save countless hours when building the UI for a website. If you're simply building a landing page for a client, you have come to the right place!
-                  </EditableFeatureText>
-                  
-                  <PreviewContainer className="sc-bDpDS lhdtVa">
-                    <PreviewGrid className="sc-bVHCgj jthJJr">
-                      <PreviewItem className="sc-dSIIpw iVNzMZ">
-                        <h4>Header 1</h4>
-                      </PreviewItem>
-                      <PreviewItem className="sc-dSIIpw iVNzMZ">
-                        <h4>Welcome!</h4>
-                        <p>Our goal is to be your favorite brand for building websites!</p>
-                      </PreviewItem>
-                      <PreviewItem className="sc-dSIIpw iVNzMZ">
-                        <h4>Header 3</h4>
-                      </PreviewItem>
-                      <PreviewItem className="sc-dSIIpw iVNzMZ">
-                        <h4>Features</h4>
-                      </PreviewItem>
-                    </PreviewGrid>
-                  </PreviewContainer>
-                </ContentSection>
-                <FooterButton className="sc-dBmzty gZgKUJ">Edit</FooterButton>
-              </div>
-              
-              <ActionButton>Select This Template</ActionButton>
-            </CardContent>
-          </PreviewCard>
-          
-          {/* Format Editor Preview Card */}
-          <PreviewCard>
-            <PreviewCardHeader>
-              Format Editor
-              <PreviewBadge>Classic</PreviewBadge>
-            </PreviewCardHeader>
-            <CardContent>
-              {/* Using the original content as a preview */}
-              <div className="sc-dBmzty kcAaHV">
-                <FormatHeader className="sc-ejfMa-d jkxPHh">
-                  <FormatHeaderText className="sc-iEXKAA kcSvnR">Header 1</FormatHeaderText>
-                  <FormatHeaderSubtext className="sc-EgOXT kvOLlf">Header 6</FormatHeaderSubtext>
-                </FormatHeader>
-                
-                <FormatContent className="sc-eZYNyq XvEDG">
-                  <FormatHeading className="sc-dlWCHZ fmKmva">Header 3</FormatHeading>
-                  <FormatParagraph className="sc-hHOBiw cwBaRj">Large Paragraph</FormatParagraph>
-                  
-                  <UploadImageSection className="sc-kWtpeL ntJYi">
-                    <UploadIcon className="sc-ecPEgm eeZcnc">↑</UploadIcon>
-                    <div>Upload Image</div>
-                  </UploadImageSection>
-                </FormatContent>
-                
-                <FooterButton className="sc-dkmUuB gLJRuN">Industry Standard Format</FooterButton>
-              </div>
-              
-              <ActionButton>Select This Template</ActionButton>
-            </CardContent>
-          </PreviewCard>
-        </CardsGrid>
-        
-        {/* How to use card */}
-        <HowToCard>
-          <CardHeader>How to Use the Website Customization Tool</CardHeader>
-          <CardContent>
-            <HowToList>
-              <li><strong>Select a template</strong> - Choose the layout and style that best fits your project needs</li>
-              <li><strong>Customize content</strong> - Edit text, headers, and other content by clicking on the edit icons</li>
-              <li><strong>Upload media</strong> - Add images, videos, and other media to enhance your website</li>
-              <li><strong>Modify styling</strong> - Change colors, fonts, and spacing to match your brand</li>
-              <li><strong>Preview changes</strong> - See how your website will look before publishing</li>
-              <li><strong>Export or publish</strong> - Download your code or publish directly to your domain</li>
-            </HowToList>
+        {/* Content Editor Panel */}
+        <EditorPanel>
+          {/* Header Section */}
+          <HeaderSection>
+            <EditableContainer>
+              <EditableHeading contentEditable suppressContentEditableWarning={true}>
+                Welcome!
+                <EditTrigger onClick={() => handleEditClick('header1')} />
+              </EditableHeading>
+            </EditableContainer>
             
-            <p>Need more help? Check out our <a href="#">documentation</a> or <a href="#">contact support</a>.</p>
-          </CardContent>
-        </HowToCard>
+            {activePopup === 'header1' && (
+              <EditorPopup>
+                <PopupTitle>
+                  <span>Font Color:</span>
+                  <button onClick={() => setActivePopup(null)}>×</button>
+                </PopupTitle>
+                <ColorPickerRow>
+                  <input type="text" defaultValue="#FFFFFF" />
+                  <ColorPreview color="#FFFFFF" />
+                </ColorPickerRow>
+                <FontOptionRow>
+                  <span>Font:</span>
+                  <FontSelect>Times New Roman</FontSelect>
+                </FontOptionRow>
+                <FontOptionRow>
+                  <span>Justification:</span>
+                  <JustificationOptions>
+                    <JustifyOption isActive={true}>Left</JustifyOption>
+                    <JustifyOption>Center</JustifyOption>
+                    <JustifyOption>Right</JustifyOption>
+                  </JustificationOptions>
+                </FontOptionRow>
+                <FontOptionRow>
+                  <span>Font Size:</span>
+                  <FontSizeOption>H1</FontSizeOption>
+                </FontOptionRow>
+              </EditorPopup>
+            )}
+            
+            <EditableContainer>
+              <EditableSubheading contentEditable suppressContentEditableWarning={true}>
+                Edit this page to be exactly how you want it!
+                <EditTrigger onClick={() => handleEditClick('subheader1')} />
+              </EditableSubheading>
+            </EditableContainer>
+            
+            {activePopup === 'subheader1' && (
+              <EditorPopup>
+                <PopupTitle>
+                  <span>Font Color:</span>
+                  <button onClick={() => setActivePopup(null)}>×</button>
+                </PopupTitle>
+                <ColorPickerRow>
+                  <input type="text" defaultValue="#FFFFFF" />
+                  <ColorPreview color="#FFFFFF" />
+                </ColorPickerRow>
+                <FontOptionRow>
+                  <span>Font:</span>
+                  <FontSelect>Times New Roman</FontSelect>
+                </FontOptionRow>
+                <FontOptionRow>
+                  <span>Justification:</span>
+                  <JustificationOptions>
+                    <JustifyOption isActive={true}>Left</JustifyOption>
+                    <JustifyOption>Center</JustifyOption>
+                    <JustifyOption>Right</JustifyOption>
+                  </JustificationOptions>
+                </FontOptionRow>
+              </EditorPopup>
+            )}
+          </HeaderSection>
+          
+          {/* Content Section */}
+          <ContentSection>
+            <ContentEditableContainer>
+              <EditableFeatureHeading contentEditable suppressContentEditableWarning={true}>
+                Features
+                <EditTrigger onClick={() => handleEditClick('features')} />
+              </EditableFeatureHeading>
+            </ContentEditableContainer>
+            
+            {activePopup === 'features' && (
+              <EditorPopup>
+                <PopupTitle>
+                  <span>Font Color:</span>
+                  <button onClick={() => setActivePopup(null)}>×</button>
+                </PopupTitle>
+                <ColorPickerRow>
+                  <input type="text" defaultValue="#333333" />
+                  <ColorPreview color="#333333" />
+                </ColorPickerRow>
+                <FontOptionRow>
+                  <span>Font:</span>
+                  <FontSelect>Times New Roman</FontSelect>
+                </FontOptionRow>
+                <FontOptionRow>
+                  <span>Justification:</span>
+                  <JustificationOptions>
+                    <JustifyOption isActive={true}>Left</JustifyOption>
+                    <JustifyOption>Center</JustifyOption>
+                    <JustifyOption>Right</JustifyOption>
+                  </JustificationOptions>
+                </FontOptionRow>
+              </EditorPopup>
+            )}
+            
+            <ContentEditableContainer>
+              <EditableFeatureText contentEditable suppressContentEditableWarning={true}>
+                This content editor puts the power back in your hands. Now you can update your website text anytime without calling your developer. Simply click on any text to edit it directly, or use the styling options to customize fonts, colors, and layout. You can even upload new images with a single click. Changes are saved automatically and your website stays fresh with minimal effort.
+                <EditTrigger onClick={() => handleEditClick('featureText')} />
+              </EditableFeatureText>
+            </ContentEditableContainer>
+            
+            {activePopup === 'featureText' && (
+              <EditorPopup>
+                <PopupTitle>
+                  <span>Font Color:</span>
+                  <button onClick={() => setActivePopup(null)}>×</button>
+                </PopupTitle>
+                <ColorPickerRow>
+                  <input type="text" defaultValue="#333333" />
+                  <ColorPreview color="#333333" />
+                </ColorPickerRow>
+                <FontOptionRow>
+                  <span>Font:</span>
+                  <FontSelect>Times New Roman</FontSelect>
+                </FontOptionRow>
+                <FontOptionRow>
+                  <span>Justification:</span>
+                  <JustificationOptions>
+                    <JustifyOption isActive={true}>Left</JustifyOption>
+                    <JustifyOption>Center</JustifyOption>
+                    <JustifyOption>Right</JustifyOption>
+                  </JustificationOptions>
+                </FontOptionRow>
+              </EditorPopup>
+            )}
+            
+            {/* Upload Image Section */}
+            <UploadImageSection>
+              <UploadIcon>↑</UploadIcon>
+              <UploadText>Upload Image</UploadText>
+            </UploadImageSection>
+          </ContentSection>
+        </EditorPanel>
       </ContentContainer>
     </PageContainer>
   );
