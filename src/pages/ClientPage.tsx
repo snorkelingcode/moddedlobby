@@ -62,6 +62,12 @@ const CloseButton = styled(Button)`
 const ClientPage: React.FC = () => {
   const navigate = useNavigate();
 
+  const handleEditorNavigation = () => {
+    // Set a session flag to indicate the user came from the client page
+    sessionStorage.setItem('fromClientPortal', 'true');
+    navigate('/editor');
+  };
+
   return (
     <ClientContainer>
       <CloseButton onClick={() => navigate('/')}>X</CloseButton>
@@ -71,10 +77,11 @@ const ClientPage: React.FC = () => {
         <ClientDescription>
           Use the editor to get an idea of how the site works from a client's prospective!
         </ClientDescription>
-        
-        <ActionButton onClick={() => navigate('/dashboard')}>
+        <center>
+        <ActionButton onClick={handleEditorNavigation}>
           Let's Go!
         </ActionButton>
+        </center>
       </ClientCard>
     </ClientContainer>
   );

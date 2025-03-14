@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Menu from '../components/Menu';
 
@@ -307,9 +308,39 @@ const FontSizeOption = styled.div`
   }
 `;
 
+const ActionButtonsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+const ActionButton = styled.button`
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: #e66c00;
+  }
+`;
+
 const EditorPage: React.FC = () => {
   const [activePopup, setActivePopup] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [showProjectsButton, setShowProjectsButton] = useState<boolean>(false);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    // Check if the user came from the client portal
+    const fromClientPortal = sessionStorage.getItem('fromClientPortal');
+    if (fromClientPortal === 'true') {
+      setShowProjectsButton(true);
+    }
+  }, []);
   
   const handleEditClick = (elementId: string) => {
     if (activePopup === elementId) {
@@ -321,6 +352,10 @@ const EditorPage: React.FC = () => {
   
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+  
+  const navigateToProjects = () => {
+    navigate('/dashboard');
   };
   
   return (
@@ -477,6 +512,15 @@ const EditorPage: React.FC = () => {
               <UploadIcon>↑</UploadIcon>
               <UploadText>Upload Image</UploadText>
             </UploadImageSection>
+            
+            {/* Conditionally show Go to My Projects button */}
+            {showProjectsButton && (
+              <ActionButtonsContainer>
+                <ActionButton onClick={navigateToProjects}>
+                  Go to My Projects
+                </ActionButton>
+              </ActionButtonsContainer>
+            )}
           </ContentSection>
         </EditorPanel>
       </ContentContainer>

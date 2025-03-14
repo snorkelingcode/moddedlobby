@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../components/Button';
 import { ContactPageProps } from '../types';
@@ -90,18 +91,29 @@ const ContactPage: React.FC<ContactPageProps> = ({ onClose }) => {
   const [email, setEmail] = useState<string>('');
   const [subject, setSubject] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Form submission logic would go here
     console.log({ email, subject, message });
     alert('Message sent!');
-    if (onClose) onClose();
+    handleClose();
+  };
+
+  const handleClose = () => {
+    // First try to use the onClose prop if provided
+    if (onClose) {
+      onClose();
+    } else {
+      // Otherwise navigate back to the home page
+      navigate('/');
+    }
   };
 
   return (
     <ContactContainer>
-      <CloseButton onClick={onClose}>X</CloseButton>
+      <CloseButton onClick={handleClose}>X</CloseButton>
       
       <ContactCard>
         <ContactTitle>Contact Us:</ContactTitle>
