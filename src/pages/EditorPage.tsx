@@ -69,32 +69,6 @@ const EditPanel = styled.div`
   overflow: hidden;
 `;
 
-const PanelHeader = styled.div`
-  background-color: #333;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const PanelTitle = styled.h3`
-  color: white;
-  margin: 0;
-`;
-
-const EditButton = styled.button`
-  background-color: #444;
-  border: 1px solid #555;
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: white;
-`;
-
 const PanelContent = styled.div`
   flex: 1;
   padding: 0;
@@ -380,11 +354,6 @@ const EditorPage: React.FC = () => {
       <EditorContainer>
         {/* Left side - Format Panel (static) */}
         <FormatPanel>
-          <PanelHeader>
-            <PanelTitle>Header 1</PanelTitle>
-            <EditButton>+</EditButton>
-          </PanelHeader>
-          
           <PanelContent>
             <FormatHeader>
               <FormatHeaderText>Header 1</FormatHeaderText>
@@ -407,11 +376,6 @@ const EditorPage: React.FC = () => {
         
         {/* Right side - Edit Panel (editable) */}
         <EditPanel>
-          <PanelHeader>
-            <PanelTitle>Welcome!</PanelTitle>
-            <EditButton>+</EditButton>
-          </PanelHeader>
-          
           <PanelContent>
             <HeaderSection>
               <EditableHeading contentEditable>
