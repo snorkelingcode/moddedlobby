@@ -59,6 +59,7 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose }) => {
 
   const menuItems = [
     { label: 'HOME', path: '/' },
+    { label: 'ABOUT', path: '/about' },
     { label: 'DEVELOPERS', path: '/developer' },
     { label: 'CLIENTS', path: '/client' },
     { label: 'CONTACT', path: '/contact' },

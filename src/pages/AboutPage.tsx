@@ -44,7 +44,7 @@ const ContentContainer = styled.div`
   flex: 1;
 `;
 
-const DeveloperPanel = styled.div`
+const AboutPanel = styled.div`
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -144,48 +144,6 @@ const EditTrigger = styled.span`
     content: "✏️";
     font-size: 12px;
   }
-`;
-
-// Feature cards
-const FeaturesGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 25px;
-`;
-
-const FeatureCard = styled.div`
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const FeatureTitle = styled.h3`
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #333;
-`;
-
-const FeatureDescription = styled.p`
-  font-size: 1rem;
-  color: #555;
-  flex-grow: 1;
-`;
-
-const FeatureIcon = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
-  font-size: 20px;
-  color: var(--accent-color);
 `;
 
 // Editor popup for styling
@@ -312,23 +270,6 @@ const FontSizeOption = styled.div`
   }
 `;
 
-const ActionButton = styled.button`
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 12px 25px;
-  font-size: 1rem;
-  font-weight: 500;
-  margin-top: 25px;
-  cursor: pointer;
-  align-self: center;
-  
-  &:hover {
-    background-color: #e66c00;
-  }
-`;
-
 // Hint message at the bottom
 const EditHint = styled.div`
   text-align: center;
@@ -340,7 +281,7 @@ const EditHint = styled.div`
   color: #666;
 `;
 
-const DeveloperPage: React.FC = () => {
+const AboutPage: React.FC = () => {
   const [activePopup, setActivePopup] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   
@@ -356,29 +297,6 @@ const DeveloperPage: React.FC = () => {
     setMenuOpen(!menuOpen);
   };
   
-  const features = [
-    {
-      icon: '🏗️',
-      title: 'Drag & Drop Building',
-      description: 'Create websites quickly with our extensive library of pre-built, customizable components.'
-    },
-    {
-      icon: '🔌',
-      title: 'API Integration',
-      description: 'Easily connect to third-party services and APIs with our simplified integration tools.'
-    },
-    {
-      icon: '👥',
-      title: 'Client Handoff',
-      description: 'Transfer content management to clients while maintaining control of the codebase.'
-    },
-    {
-      icon: '🔄',
-      title: 'Version Control',
-      description: 'Track changes and rollback to previous versions if needed, without complicated Git workflows.'
-    }
-  ];
-  
   return (
     <PageContainer>
       <MenuBar>
@@ -389,13 +307,13 @@ const DeveloperPage: React.FC = () => {
       <Menu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
       <ContentContainer>
-        {/* Developer Panel */}
-        <DeveloperPanel>
+        {/* About Panel */}
+        <AboutPanel>
           {/* Header Section */}
           <HeaderSection>
             <EditableContainer>
               <EditableHeading contentEditable suppressContentEditableWarning={true}>
-                Developer Platform
+                About Our Platform
                 <EditTrigger onClick={() => handleEditClick('header1')} />
               </EditableHeading>
             </EditableContainer>
@@ -423,7 +341,7 @@ const DeveloperPage: React.FC = () => {
             
             <EditableContainer>
               <EditableSubheading contentEditable suppressContentEditableWarning={true}>
-                Build websites faster, empower clients, reduce maintenance
+                Bridging the gap between developers and clients with powerful tools
                 <EditTrigger onClick={() => handleEditClick('subheader1')} />
               </EditableSubheading>
             </EditableContainer>
@@ -448,9 +366,67 @@ const DeveloperPage: React.FC = () => {
           
           {/* Content Section */}
           <ContentSection>
+            {/* For Clients Section */}
             <ContentEditableContainer>
               <EditableSectionHeading contentEditable suppressContentEditableWarning={true}>
-                Built for Developers, by Developers
+                For Clients
+                <EditTrigger onClick={() => handleEditClick('clientHeading')} />
+              </EditableSectionHeading>
+            </ContentEditableContainer>
+            
+            {activePopup === 'clientHeading' && (
+              <EditorPopup>
+                <PopupTitle>
+                  <span>Font Color:</span>
+                  <button onClick={() => setActivePopup(null)}>×</button>
+                </PopupTitle>
+                <ColorPickerRow>
+                  <input type="text" defaultValue="#333333" />
+                  <ColorPreview color="#333333" />
+                </ColorPickerRow>
+                <FontOptionRow>
+                  <span>Font:</span>
+                  <FontSelect>Times New Roman</FontSelect>
+                </FontOptionRow>
+              </EditorPopup>
+            )}
+            
+            <ContentEditableContainer>
+              <EditableParagraph contentEditable suppressContentEditableWarning={true}>
+                Our platform empowers you to take control of your website content without technical knowledge. No more waiting for your developer to make simple text changes or update images. With our intuitive content editor, you can modify your website whenever you need to, ensuring your information stays current. The easy-to-use interface highlights editable areas and provides simple styling options that anyone can use. Your changes are automatically saved and implemented, keeping your site fresh with minimal effort.
+                <EditTrigger onClick={() => handleEditClick('clientText')} />
+              </EditableParagraph>
+            </ContentEditableContainer>
+            
+            {activePopup === 'clientText' && (
+              <EditorPopup>
+                <PopupTitle>
+                  <span>Font Color:</span>
+                  <button onClick={() => setActivePopup(null)}>×</button>
+                </PopupTitle>
+                <ColorPickerRow>
+                  <input type="text" defaultValue="#333333" />
+                  <ColorPreview color="#333333" />
+                </ColorPickerRow>
+                <FontOptionRow>
+                  <span>Font:</span>
+                  <FontSelect>Times New Roman</FontSelect>
+                </FontOptionRow>
+                <FontOptionRow>
+                  <span>Justification:</span>
+                  <JustificationOptions>
+                    <JustifyOption isActive={true}>Left</JustifyOption>
+                    <JustifyOption>Center</JustifyOption>
+                    <JustifyOption>Right</JustifyOption>
+                  </JustificationOptions>
+                </FontOptionRow>
+              </EditorPopup>
+            )}
+            
+            {/* For Developers Section */}
+            <ContentEditableContainer style={{ marginTop: '25px' }}>
+              <EditableSectionHeading contentEditable suppressContentEditableWarning={true}>
+                For Developers
                 <EditTrigger onClick={() => handleEditClick('devHeading')} />
               </EditableSectionHeading>
             </ContentEditableContainer>
@@ -474,7 +450,7 @@ const DeveloperPage: React.FC = () => {
             
             <ContentEditableContainer>
               <EditableParagraph contentEditable suppressContentEditableWarning={true}>
-                Our platform is designed to solve the most common pain points in the developer-client relationship. Build websites faster with our extensive component library, then hand off content management to clients while maintaining complete control over the code. This means no more minor text update requests, no more emergency calls about simple changes, and more time for you to focus on complex development tasks that really matter.
+                Developers love our platform because it streamlines the client relationship. Build websites faster with our drag-and-drop modules while maintaining full control over the codebase. Once you've designed the site, you can hand off content management to clients through our specialized client portal. This means fewer tickets for minor text changes and more time for meaningful development work. The platform maintains proper separation between structure and content, ensuring clients can't break the site's functionality while updating their content. You'll spend less time on maintenance and more time creating new features and projects.
                 <EditTrigger onClick={() => handleEditClick('devText')} />
               </EditableParagraph>
             </ContentEditableContainer>
@@ -503,22 +479,8 @@ const DeveloperPage: React.FC = () => {
                 </FontOptionRow>
               </EditorPopup>
             )}
-            
-            <FeaturesGrid>
-              {features.map((feature, index) => (
-                <FeatureCard key={index}>
-                  <FeatureIcon>{feature.icon}</FeatureIcon>
-                  <FeatureTitle>{feature.title}</FeatureTitle>
-                  <FeatureDescription>{feature.description}</FeatureDescription>
-                </FeatureCard>
-              ))}
-            </FeaturesGrid>
-            
-            <ActionButton onClick={() => window.location.href = '/dashboard'}>
-              Go to Dashboard
-            </ActionButton>
           </ContentSection>
-        </DeveloperPanel>
+        </AboutPanel>
         
         <EditHint>Try editing the content above! Click on any text to modify it, or click the pencil icon for styling options.</EditHint>
       </ContentContainer>
@@ -526,4 +488,4 @@ const DeveloperPage: React.FC = () => {
   );
 };
 
-export default DeveloperPage;
+export default AboutPage;

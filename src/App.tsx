@@ -13,6 +13,7 @@ import ClientPage from './pages/ClientPage';
 import DeveloperPage from './pages/DeveloperPage';
 import EditorPage from './pages/EditorPage';
 import ContactPage from './pages/ContactPage';
+import AboutPage from './pages/AboutPage';
 
 // Root Container
 const AppContainer = styled.div`
@@ -43,6 +44,7 @@ function App() {
           <Route path="/developer" element={<DeveloperPage />} />
           <Route path="/editor" element={<EditorPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
       </AppContainer>
     </BrowserRouter>
