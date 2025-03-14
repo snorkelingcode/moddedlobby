@@ -32,7 +32,9 @@ function App() {
       <GlobalStyle />
       <AppContainer>
         <Routes>
-          <Route path="/" element={<Introduction />} />
+          {/* Make EditorPage the landing page */}
+          <Route path="/" element={<EditorPage />} />
+          <Route path="/introduction" element={<Introduction />} />
           <Route path="/dashboard" element={<Dashboard userType={userType} />} />
           <Route path="/project-settings" element={<ProjectSettings />} />
           <Route path="/profile-settings" element={<ProfileSettings userType={userType} />} />

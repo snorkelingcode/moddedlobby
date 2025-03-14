@@ -115,13 +115,37 @@ const FooterButton = styled(Button)`
   margin-top: 10px;
 `;
 
-const TextEditor = styled.div`
+const EditableContent = styled.div`
+  [contenteditable="true"] {
+    padding: 5px;
+    border: 1px dashed transparent;
+    
+    &:hover, &:focus {
+      border: 1px dashed #ccc;
+      outline: none;
+    }
+  }
+  
   h1, h2, h3, h4, h5, h6 {
     margin-bottom: 10px;
   }
   
   p {
     margin-bottom: 15px;
+  }
+`;
+
+const InstructionText = styled.div`
+  background-color: #f0f8ff;
+  border: 1px solid #add8e6;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-style: italic;
+  
+  span {
+    font-weight: bold;
+    color: var(--accent-color);
   }
 `;
 
@@ -166,17 +190,21 @@ const EditorPage = () => {
       <EditorContainer>
         <EditorPanel>
           <PanelHeader>
-            <PanelTitle>Header 1</PanelTitle>
+            <PanelTitle>Editor Panel - Editable Content</PanelTitle>
             <Button icon="✏️" />
           </PanelHeader>
           <PanelContent>
-            <TextEditor>
-              <h1>Header 1</h1>
-              <p>Header 8</p>
+            <InstructionText>
+              This is a demo editor. <span>Click on any text below to edit it</span>. Your changes will be reflected in this panel but won't be saved.
+            </InstructionText>
+            
+            <EditableContent>
+              <h1 contentEditable="true">Header 1</h1>
+              <p contentEditable="true">This is editable text. Click here to modify this content and see how the editor works. Feel free to experiment!</p>
               
-              <h3>Header 3</h3>
-              <p>Large Paragraph</p>
-            </TextEditor>
+              <h3 contentEditable="true">Header 3</h3>
+              <p contentEditable="true">The text on this side of the page is fully editable. This demonstrates how clients can update their website content without needing technical knowledge. Try editing this paragraph!</p>
+            </EditableContent>
             
             <ModulesContainer>
               {moduleCategories.map((category, index) => (
@@ -202,8 +230,8 @@ const EditorPage = () => {
         
         <PreviewPanel>
           <PanelHeader>
-            <PanelTitle>Welcome!</PanelTitle>
-            <Button icon="✏️" />
+            <PanelTitle>Preview Panel - Static Content</PanelTitle>
+            <Button icon="👁️" />
           </PanelHeader>
           <PanelContent>
             <HeaderSection>
@@ -235,7 +263,7 @@ const EditorPage = () => {
               </SitePreview>
             </ContentSection>
             
-            <FooterButton>Edit</FooterButton>
+            <FooterButton>View Full Preview</FooterButton>
           </PanelContent>
         </PreviewPanel>
       </EditorContainer>
