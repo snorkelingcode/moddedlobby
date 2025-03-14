@@ -1,0 +1,8 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+...
+# Many more appropriate excludes for a React TypeScript project
+
+node_modules
