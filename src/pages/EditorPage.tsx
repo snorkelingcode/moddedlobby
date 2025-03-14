@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import Button from '../components/Button';
 
 const PageContainer = styled.div`
   display: flex;
