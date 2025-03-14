@@ -1,15 +1,46 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from '../components/Header';
 import Navigation from '../components/Navigation';
-import Button from '../components/Button';
+import Menu from '../components/Menu';
 import { DashboardProps, Project } from '../types';
 
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+`;
+
+const HeaderBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-height);
+  width: 100%;
+  background-color: #333;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+`;
+
+const Logo = styled.div`
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+`;
+
+const MenuButton = styled.button`
+  color: white;
+  font-size: 16px;
+  padding: 5px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    color: #aaa;
+  }
 `;
 
 const ContentContainer = styled.div`
@@ -20,7 +51,7 @@ const ContentContainer = styled.div`
 
 const ProjectsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
   margin-top: 20px;
   
@@ -35,6 +66,7 @@ const ProjectCard = styled.div`
   background-color: var(--gray-dark);
   border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 `;
 
 const ProjectPreview = styled.div`
@@ -61,6 +93,7 @@ const PreviewContent = styled.div`
 const ProjectTitle = styled.div`
   padding: 10px;
   color: white;
+  font-weight: bold;
 `;
 
 const ProjectActions = styled.div`
@@ -70,8 +103,24 @@ const ProjectActions = styled.div`
   padding: 10px;
 `;
 
+const ActionButton = styled(Link)`
+  display: block;
+  background-color: #444;
+  color: white;
+  padding: 8px 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  text-align: center;
+  
+  &:hover {
+    background-color: #555;
+  }
+`;
+
 const Dashboard: React.FC<DashboardProps> = ({ userType = 'developer' }) => {
-  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   
   // Sample project data
   const projects: Project[] = [
@@ -82,7 +131,13 @@ const Dashboard: React.FC<DashboardProps> = ({ userType = 'developer' }) => {
   
   return (
     <PageContainer>
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
+      <HeaderBar>
+        <Logo>Developer Platform</Logo>
+        <MenuButton onClick={() => setMenuOpen(true)}>Menu</MenuButton>
+      </HeaderBar>
+      
+      <Menu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
       <ContentContainer>
         <Navigation activeTab="Projects" />
         
@@ -116,14 +171,10 @@ const Dashboard: React.FC<DashboardProps> = ({ userType = 'developer' }) => {
               <ProjectTitle>{project.name}</ProjectTitle>
               
               <ProjectActions>
-                <Button fullWidth as={Link} to="/project-settings">Project Settings</Button>
-                <Button 
-                  fullWidth 
-                  as={Link} 
-                  to={userType === 'developer' ? '/editor' : '/sandbox'}
-                >
+                <ActionButton to="/project-settings">Project Settings</ActionButton>
+                <ActionButton to={userType === 'developer' ? '/editor' : '/sandbox'}>
                   {userType === 'developer' ? 'Editor' : 'Sandbox'}
-                </Button>
+                </ActionButton>
               </ProjectActions>
             </ProjectCard>
           ))}

@@ -1,14 +1,45 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Header from '../components/Header';
 import Navigation from '../components/Navigation';
-import Button from '../components/Button';
+import Menu from '../components/Menu';
 import { Project } from '../types';
 
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+`;
+
+const HeaderBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-height);
+  width: 100%;
+  background-color: #333;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+`;
+
+const Logo = styled.div`
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+`;
+
+const MenuButton = styled.button`
+  color: white;
+  font-size: 16px;
+  padding: 5px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    color: #aaa;
+  }
 `;
 
 const ContentContainer = styled.div`
@@ -97,8 +128,22 @@ const StatusDot = styled.div<StatusDotProps>`
   background-color: ${props => props.active ? '#4CAF50' : '#F44336'};
 `;
 
+const StyledButton = styled.button`
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  
+  &:hover {
+    background-color: #555;
+  }
+`;
+
 const ProjectSettings: React.FC = () => {
-  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   
   // Sample project data
   const project: Project = {
@@ -107,7 +152,7 @@ const ProjectSettings: React.FC = () => {
     primaryColor: '000000',
     secondaryColor: 'FFFFFF',
     tertiaryColor: '737373',
-    accentColor: 'FF7700',
+    accentColor: '444444',
     font: 'Times New Roman',
     domain: 'www.example.com',
     status: 'Delivered',
@@ -116,7 +161,13 @@ const ProjectSettings: React.FC = () => {
   
   return (
     <PageContainer>
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
+      <HeaderBar>
+        <Logo>Developer Platform</Logo>
+        <MenuButton onClick={() => setMenuOpen(true)}>Menu</MenuButton>
+      </HeaderBar>
+      
+      <Menu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
       <ContentContainer>
         <Navigation activeTab="Project Settings" />
         
@@ -126,7 +177,7 @@ const ProjectSettings: React.FC = () => {
               <FormGroup>
                 <Label>Project Name:</Label>
                 <Input type="text" value={project.name} />
-                <Button icon="✏️" style={{ marginTop: '5px' }} />
+                <StyledButton style={{ marginTop: '5px' }}>Edit</StyledButton>
               </FormGroup>
               
               <FormGroup>
@@ -166,13 +217,13 @@ const ProjectSettings: React.FC = () => {
               <FormGroup>
                 <Label>Font:</Label>
                 <Input type="text" value={project.font} />
-                <Button icon="✏️" style={{ marginTop: '5px' }} />
+                <StyledButton style={{ marginTop: '5px' }}>Edit</StyledButton>
               </FormGroup>
               
               <FormGroup>
                 <Label>Domain Name:</Label>
                 <Input type="text" value={project.domain} />
-                <Button icon="✏️" style={{ marginTop: '5px' }} />
+                <StyledButton style={{ marginTop: '5px' }}>Edit</StyledButton>
               </FormGroup>
               
               <FormGroup>
@@ -186,7 +237,7 @@ const ProjectSettings: React.FC = () => {
               <FormGroup>
                 <Label>Transfer To:</Label>
                 <Input type="email" value={project.transferEmail} />
-                <Button icon="✏️" style={{ marginTop: '5px' }} />
+                <StyledButton style={{ marginTop: '5px' }}>Edit</StyledButton>
               </FormGroup>
             </SettingsColumn>
           </SettingsGrid>

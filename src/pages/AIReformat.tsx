@@ -114,6 +114,7 @@ const AddButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  border: none;
   
   &:hover {
     background-color: #555;
@@ -130,7 +131,11 @@ const ActionButtons = styled.div`
   }
 `;
 
-const Button = styled.button<{ primary?: boolean }>`
+interface ActionButtonProps {
+  primary?: boolean;
+}
+
+const ActionButton = styled.button<ActionButtonProps>`
   background-color: ${props => props.primary ? '#444' : '#333'};
   color: white;
   padding: 8px 15px;
@@ -187,9 +192,9 @@ const AIReformat: React.FC = () => {
           </PromptSection>
           
           <ActionButtons>
-            <Button>Import Project</Button>
-            <Button primary>Apply to Project</Button>
-            <Button>Export Code</Button>
+            <ActionButton>Import Project</ActionButton>
+            <ActionButton primary>Apply to Project</ActionButton>
+            <ActionButton>Export Code</ActionButton>
           </ActionButtons>
         </AICard>
       </ContentContainer>

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { HeaderProps } from '../types';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -26,17 +27,13 @@ const MenuButton = styled.button`
   padding: 5px 10px;
   border-radius: 4px;
   background: none;
-  cursor: pointer;
   border: none;
+  cursor: pointer;
   
   &:hover {
     color: var(--accent-color);
   }
 `;
-
-interface HeaderProps {
-  onMenuClick: () => void;
-}
 
 const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   return (
