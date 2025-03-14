@@ -21,7 +21,7 @@ const EditorContainer = styled.div`
   }
 `;
 
-const EditorPanel = styled.div`
+const PreviewPanel = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -33,7 +33,7 @@ const EditorPanel = styled.div`
   }
 `;
 
-const PreviewPanel = styled.div`
+const EditorPanel = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -123,6 +123,7 @@ const EditableContent = styled.div`
     &:hover, &:focus {
       border: 1px dashed #ccc;
       outline: none;
+      background-color: rgba(255, 255, 255, 0.8);
     }
   }
   
@@ -149,16 +150,56 @@ const InstructionText = styled.div`
   }
 `;
 
-const SitePreview = styled.div`
-  margin-top: 20px;
-  border: 1px solid #ccc;
-  padding: 10px;
+const EditorStructure = styled.div`
+  h1, h2, h3, h4, h5, h6 {
+    background-color: var(--gray-light);
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    color: #555;
+    position: relative;
+  }
+  
+  h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
+    content: attr(data-type);
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 10px;
+    color: #777;
+  }
+  
+  p {
+    background-color: var(--gray-light);
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    min-height: 30px;
+    position: relative;
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
+  p::before {
+    content: 'Paragraph';
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    font-size: 10px;
+    color: #777;
+  }
 `;
 
-const PreviewGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+const DeveloperInstructionText = styled.div`
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #555;
 `;
 
 const EditorPage = () => {
@@ -188,23 +229,63 @@ const EditorPage = () => {
     <PageContainer>
       <Header showMenu={showMenu} setShowMenu={setShowMenu} />
       <EditorContainer>
-        <EditorPanel>
+        {/* Left side - Preview Panel (editable by guest users) */}
+        <PreviewPanel>
           <PanelHeader>
-            <PanelTitle>Editor Panel - Editable Content</PanelTitle>
+            <PanelTitle>Website Preview</PanelTitle>
             <Button icon="✏️" />
           </PanelHeader>
           <PanelContent>
             <InstructionText>
-              This is a demo editor. <span>Click on any text below to edit it</span>. Your changes will be reflected in this panel but won't be saved.
+              <span>Welcome to the interactive website editor!</span> This panel shows how a website would look to visitors. <span>Click on any text to edit it</span> and see your changes immediately. This demonstrates how clients can easily update their website content.
             </InstructionText>
             
             <EditableContent>
-              <h1 contentEditable="true">Header 1</h1>
-              <p contentEditable="true">This is editable text. Click here to modify this content and see how the editor works. Feel free to experiment!</p>
+              <HeaderSection>
+                <h1 contentEditable="true">Welcome to Our Platform</h1>
+                <p contentEditable="true">Our goal is to be your favorite tool for building amazing websites!</p>
+              </HeaderSection>
               
-              <h3 contentEditable="true">Header 3</h3>
-              <p contentEditable="true">The text on this side of the page is fully editable. This demonstrates how clients can update their website content without needing technical knowledge. Try editing this paragraph!</p>
+              <ContentSection>
+                <h2 contentEditable="true">About Us</h2>
+                <p contentEditable="true">We're a team of passionate developers and designers dedicated to creating the best web experience for both developers and their clients. Our platform bridges the gap between technical capabilities and user-friendly interfaces.</p>
+                
+                <h2 contentEditable="true">Key Features</h2>
+                <p contentEditable="true">Our drag and drop modules save countless hours when building websites. Whether you're creating a landing page or a complex web application, we provide all the tools you need to succeed. Edit this text to see how easy content management can be!</p>
+                
+                <h3 contentEditable="true">Why Choose Us?</h3>
+                <p contentEditable="true">• Intuitive editing interface<br/>• Developer-friendly tools<br/>• Client-focused features<br/>• Regular updates and improvements<br/>• Dedicated support team</p>
+              </ContentSection>
             </EditableContent>
+            
+            <FooterButton>Save Changes</FooterButton>
+          </PanelContent>
+        </PreviewPanel>
+        
+        {/* Right side - Editor Panel (developer view) */}
+        <EditorPanel>
+          <PanelHeader>
+            <PanelTitle>Developer Layout View</PanelTitle>
+            <Button icon="🔧" />
+          </PanelHeader>
+          <PanelContent>
+            <DeveloperInstructionText>
+              This panel represents the developer's view of the page structure. In a real implementation, developers would be able to drag and drop modules to build the layout that clients can then populate with content.
+            </DeveloperInstructionText>
+            
+            <EditorStructure>
+              <h1 data-type="H1">Header Element (H1)</h1>
+              <p>Paragraph Element - Primary content area for text</p>
+              
+              <h2 data-type="H2">Sub-Heading Element (H2)</h2>
+              <p>Paragraph Element - Secondary content description</p>
+              
+              <h2 data-type="H2">Additional Section Heading (H2)</h2>
+              <p>Paragraph Element - Feature description text block</p>
+              
+              <h3 data-type="H3">Minor Section Heading (H3)</h3>
+              <p>Paragraph Element - List content area</p>
+            </EditorStructure>
             
             <ModulesContainer>
               {moduleCategories.map((category, index) => (
@@ -224,48 +305,9 @@ const EditorPage = () => {
               ))}
             </ModulesContainer>
             
-            <FooterButton>Industry Standard Format</FooterButton>
+            <FooterButton>Apply Template</FooterButton>
           </PanelContent>
         </EditorPanel>
-        
-        <PreviewPanel>
-          <PanelHeader>
-            <PanelTitle>Preview Panel - Static Content</PanelTitle>
-            <Button icon="👁️" />
-          </PanelHeader>
-          <PanelContent>
-            <HeaderSection>
-              <h1>Welcome!</h1>
-              <p>Our goal is to be your favorite brand for building websites!</p>
-            </HeaderSection>
-            
-            <ContentSection>
-              <h2>Features</h2>
-              <p>Our drag and drop modules save countless hours when building the UI for a website. If you're simply building a landing page for a client, you have come to the right place! We provide developers with the tools to create websites quickly, while also having the ability to manage the codebase themselves for additional customization and power!</p>
-              
-              {/* Preview of the site in small format */}
-              <SitePreview>
-                <PreviewGrid>
-                  <div>
-                    <h4>Header 1</h4>
-                  </div>
-                  <div>
-                    <h4>Welcome!</h4>
-                    <small>Our goal is to be your favorite brand for building websites!</small>
-                  </div>
-                  <div>
-                    <h4>Header 3</h4>
-                  </div>
-                  <div>
-                    <h4>Features</h4>
-                  </div>
-                </PreviewGrid>
-              </SitePreview>
-            </ContentSection>
-            
-            <FooterButton>View Full Preview</FooterButton>
-          </PanelContent>
-        </PreviewPanel>
       </EditorContainer>
     </PageContainer>
   );
