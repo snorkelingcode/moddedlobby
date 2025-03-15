@@ -168,7 +168,7 @@ const ProfileSettings: React.FC<ProfileSettingsProps> = ({ userType = 'client' }
   return (
     <PageContainer>
       <HeaderBar>
-        <Logo>Developer Platform</Logo>
+        <Logo>Halotab</Logo>
         <MenuButton onClick={() => setMenuOpen(true)}>Menu</MenuButton>
       </HeaderBar>
       

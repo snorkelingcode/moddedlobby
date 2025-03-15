@@ -99,7 +99,7 @@ const Introduction: React.FC = () => {
   return (
     <IntroContainer>
       <MenuBar>
-        <Logo>Developer Platform</Logo>
+        <Logo>Halotab</Logo>
         <MenuButton onClick={() => setMenuOpen(true)}>Menu</MenuButton>
       </MenuBar>
       

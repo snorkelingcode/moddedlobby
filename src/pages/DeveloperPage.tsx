@@ -382,7 +382,7 @@ const DeveloperPage: React.FC = () => {
   return (
     <PageContainer>
       <MenuBar>
-        <Logo>Developer Platform</Logo>
+        <Logo>Halotab</Logo>
         <MenuButton onClick={toggleMenu}>Menu</MenuButton>
       </MenuBar>
       
